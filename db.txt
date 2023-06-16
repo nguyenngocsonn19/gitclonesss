@@ -1,0 +1,134 @@
+CREATE DATABASE hotel_booking_system;
+
+USE hotel_booking_system;
+
+CREATE TABLE hotels (
+  hotel_id INT AUTO_INCREMENT PRIMARY KEY,
+  hotel_name VARCHAR(255) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  img VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  phone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE room_types (
+  room_type_id INT AUTO_INCREMENT PRIMARY KEY,
+  room_type_name VARCHAR(255) NOT NULL,
+  description TEXT
+);
+
+CREATE TABLE rooms (
+  room_id INT AUTO_INCREMENT PRIMARY KEY,
+  room_type_id INT NOT NULL,
+  hotel_id INT NOT NULL,
+  room_number VARCHAR(20) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  description TEXT,
+  availability BOOLEAN NOT NULL DEFAULT TRUE,
+  img VARCHAR(255) NOT NULL,
+  FOREIGN KEY (room_type_id) REFERENCES room_types(room_type_id),
+  FOREIGN KEY (hotel_id) REFERENCES hotels(hotel_id)
+);
+
+CREATE TABLE cart (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  room_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+CREATE TABLE bookings (
+  booking_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  room_id INT NOT NULL,
+  hotel_id INT NOT NULL,
+  check_in_date DATE NOT NULL,
+  check_out_date DATE NOT NULL,
+  booking_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total_price DECIMAL(10,2) NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+  adults INT NOT NULL,
+  children INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (room_id) REFERENCES rooms(room_id),
+  FOREIGN KEY (hotel_id) REFERENCES rooms(hotel_id)
+);
+CREATE TABLE customers (
+  customer_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  booking_id INT NOT NULL,
+  booking_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
+);
+
+10:40 CH
+INSERT INTO hotels (hotel_name, address, phone, email, img)
+VALUES ('Hotel A', '123 Street, City', '123456789', 'hotela@example.com', 'hotelA.jpg');
+
+INSERT INTO hotels (hotel_name, address, phone, email, img)
+VALUES ('Hotel B', '456 Avenue, Town', '987654321', 'hotelb@example.com', 'hotelB.jpg');
+
+INSERT INTO hotels (hotel_name, address, phone, email, img)
+VALUES ('Hotel C', '789 Road, Village', '555555555', 'hotelc@example.com', 'hotelC.jpg');
+
+INSERT INTO hotels (hotel_name, address, phone, email, img)
+VALUES ('Hotel D', '321 Lane, County', '111111111', 'hoteld@example.com', 'hotelD.jpg');
+
+INSERT INTO hotels (hotel_name, address, phone, email, img)
+VALUES ('Hotel E', '555 Boulevard, City', '999999999', 'hotele@example.com', 'hotelE.jpg');
+
+INSERT INTO users (username, password, full_name, email, phone)
+VALUES ('user1', 'password1', 'John Doe', 'john@example.com', '987654321');
+
+INSERT INTO users (username, password, full_name, email, phone)
+VALUES ('user2', 'password2', 'Jane Smith', 'jane@example.com', '123456789');
+
+INSERT INTO users (username, password, full_name, email, phone)
+VALUES ('user3', 'password3', 'David Johnson', 'david@example.com', '555555555');
+
+INSERT INTO users (username, password, full_name, email, phone)
+VALUES ('user4', 'password4', 'Sarah Wilson', 'sarah@example.com', '111111111');
+
+INSERT INTO users (username, password, full_name, email, phone)
+VALUES ('user5', 'password5', 'Emily Brown', 'emily@example.com', '999999999');
+INSERT INTO room_types (room_type_name, description)
+VALUES ('Standard Room', 'A standard room with basic amenities.');
+
+INSERT INTO room_types (room_type_name, description)
+VALUES ('Deluxe Room', 'A spacious room with extra amenities and a city view.');
+
+INSERT INTO room_types (room_type_name, description)
+VALUES ('Suite', 'A luxurious suite with separate living and sleeping areas.');
+
+INSERT INTO room_types (room_type_name, description)
+VALUES ('Family Room', 'A large room with multiple beds, suitable for families.');
+
+INSERT INTO room_types (room_type_name, description)
+VALUES ('Penthouse', 'An exclusive penthouse with panoramic views and luxury amenities.');
+INSERT INTO rooms (room_type_id, hotel_id, room_number, price, description, availability, img)
+VALUES (1, 1, '101', 100.00, 'Standard room with city view', TRUE, 'room101.jpg');
+
+INSERT INTO rooms (room_type_id, hotel_id, room_number, price, description, availability, img)
+VALUES (2, 1, '201', 150.00, 'Deluxe room with balcony', TRUE, 'room201.jpg');
+
+INSERT INTO rooms (room_type_id, hotel_id, room_number, price, description, availability, img)
+VALUES (3, 2, '301', 250.00, 'Luxurious suite with ocean view', TRUE, 'room301.jpg');
+
+INSERT INTO rooms (room_type_id, hotel_id, room_number, price, description, availability, img)
+VALUES (4, 3, '401', 200.00, 'Spacious family room with two double beds', TRUE, 'room401.jpg');
+
+INSERT INTO rooms (room_type_id, hotel_id, room_number, price, description, availability, img)
+VALUES (5, 3, '501', 500.00, 'Exclusive penthouse on the top floor', TRUE, 'room501.jpg');
