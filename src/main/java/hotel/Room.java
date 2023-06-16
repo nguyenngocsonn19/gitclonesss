@@ -2,25 +2,51 @@ package hotel;
 
 public class Room {
     private int room_id;
-
-    public Room() {
-
-    }
+    private int room_type_id;
+    private int hotel_id;
+    private int room_number;
+    private double price;
+    private String description;
+    private byte availability;
     private RoomType roomType;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    private String img;
+
+    public Room(int roomId, int roomTypeId, int hotelId, int roomNumber, double price, String description, byte availability) {
+        this.room_id = roomId;
+        this.room_type_id = roomTypeId;
+        this.hotel_id = hotelId;
+        this.room_number = roomNumber;
+        this.price = price;
+        this.description = description;
+        this.availability = availability;
+    }
 
     public Room(int roomId, int roomNumber, double price, byte availability) {
         this.room_id = roomId;
         this.room_number = roomNumber;
         this.price = price;
+        this.description = description;
         this.availability = availability;
     }
 
-    public RoomType getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
+    public Room(int roomId, int room_type_id, int hotel_id, int roomNumber, double price, String description, byte availability, String img) {
+        this.room_id = roomId;
+        this.room_type_id = room_type_id;
+        this.hotel_id = hotel_id;
+        this.room_number = roomNumber;
+        this.price = price;
+        this.description = description;
+        this.availability = availability;
+        this.img = img;
     }
 
     public int getRoom_id() {
@@ -79,21 +105,11 @@ public class Room {
         this.availability = availability;
     }
 
-    private int room_type_id;
-    private int hotel_id;
-    private int room_number;
-    private double price;
-    private String description;
-    private byte availability;
-
-    public Room(int roomId, int roomTypeId, int hotelId, int roomNumber, double price, String description, byte availability) {
-        this.room_id = roomId;
-        this.room_type_id = roomTypeId;
-        this.hotel_id = hotelId;
-        this.room_number = roomNumber;
-        this.price = price;
-        this.description = description;
-        this.availability = availability;
+    public RoomType getRoomType() {
+        return roomType;
     }
 
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
 }

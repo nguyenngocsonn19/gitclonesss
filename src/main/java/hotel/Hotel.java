@@ -10,9 +10,35 @@ public class Hotel {
     private String address;
     private String phone;
     private String email;
+    private String img;
+
+    public Hotel(int id, String name, String address, String phone, String email, String img) {
+        this.hotel_id = id;
+        this.hotel_name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Hotel(int hotel_id, String hotel_name, String address, String phone, String email) {
+        this.hotel_id = hotel_id;
+        this.hotel_name = hotel_name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
 
     public Hotel(int hotelId) {
-
+        this.hotel_id = hotelId;
     }
 
     public void setRooms(List<Room> rooms) {
@@ -22,6 +48,7 @@ public class Hotel {
     public List<Room> getRooms() {
         return rooms;
     }
+
     public int getHotel_id() {
         return hotel_id;
     }
@@ -61,13 +88,4 @@ public class Hotel {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Hotel(int hotel_id,String hotel_name,String address,String phone,String email){
-        this.hotel_id = hotel_id;
-        this.hotel_name = hotel_name;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-    }
 }
-
